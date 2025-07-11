@@ -1,4 +1,4 @@
-// src/pages/Login/Login.js
+// src/pages/Login/Login.jsx
 import React, { useState } from 'react';
 
 const Login = () => {
@@ -7,7 +7,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate token-based login (using localStorage)
     if (username === 'admin' && password === 'admin') {
       localStorage.setItem('authToken', 'dummy-token');
       alert('Login successful');
@@ -17,16 +16,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-80">
-        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-200">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96 max-w-full">
+        <h2 className="text-3xl font-semibold text-center text-blue-600 mb-6">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
             <input
               type="text"
               id="username"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -37,13 +36,15 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+          <button 
+            type="submit" 
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             Login
           </button>
         </form>
