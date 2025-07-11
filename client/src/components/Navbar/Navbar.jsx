@@ -1,5 +1,5 @@
-// src/components/Navbar/Navbar.jsx
 import React, { useState } from 'react';
+import Button from '../Button/Button'; // Import Button component
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,18 +17,17 @@ const Navbar = () => {
           <i className={`fa ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
         </button>
       </div>
+
+      {/* Desktop version of the Log Out button */}
       <div className="hidden lg:block">
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-          Log Out
-        </button>
+        <Button label="Log Out" onClick={() => console.log('Logged out')} />
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden absolute top-16 left-0 w-full bg-gray-800 text-white p-4">
-          <button className="w-full bg-blue-600 text-white py-2 rounded-md">
-            Log Out
-          </button>
+          {/* Only one Log Out button is included now, in the mobile menu */}
+          <Button label="Log Out" onClick={() => console.log('Logged out')} />
         </div>
       )}
     </div>
@@ -36,3 +35,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
