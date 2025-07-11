@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import InputField from '../../components/InputField/InputField'; // Import InputField component
 import Button from '../../components/Button/Button'; // Import Button component
+import Modal from '../../components/Modal/Modal'; // Import Modal component
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +14,7 @@ const Login = () => {
       localStorage.setItem('authToken', 'dummy-token');
       alert('Login successful');
     } else {
-      alert('Invalid credentials');
+      setShowModal(true); // Show modal when credentials are invalid
     }
   };
 
@@ -35,12 +37,17 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" label="Login" onClick={handleSubmit} />
+          <Button type="submit" label="Login" />
         </form>
       </div>
+
+      {/* Modal for Invalid Credentials */}
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <h2 className="text-xl text-red-600">Invalid Credentials</h2>
+        <p>Please check your username and password and try again.</p>
+      </Modal>
     </div>
   );
 };
 
 export default Login;
-
