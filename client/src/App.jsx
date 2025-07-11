@@ -15,9 +15,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
 
         {/* Protected Routes for Dashboard, Profile, and Settings */}
-        {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-        <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} /> */}
+        {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
+        {/* <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} /> */} 
 
         {/* Redirect to Login if no route is matched */}
         <Route path="*" element={<Login />} />
