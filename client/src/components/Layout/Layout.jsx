@@ -1,20 +1,19 @@
-// src/components/Layout/Layout.jsx
-import React from "react";
-import Sidebar from "../Sidebar/Sidebar";  // Import Sidebar
-import Navbar from "../Navbar/Navbar";    // Import Navbar
+import React from 'react';
+import Sidebar from '../Sidebar/Sidebar';
+import Navbar from '../Navbar/Navbar';
+import { Outlet } from 'react-router-dom';  // Import Outlet to render child routes
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
-    <div className="flex">
+    <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar />
       
-      <div className="flex-1">
-        {/* Navbar */}
+      <div className="flex-1 overflow-auto ml-64"> {/* Adjust the margin to allow space for the sidebar */}
         <Navbar />
-        
-        {/* Main Content */}
-        <div className="p-6">{children}</div>
+        <main className="p-6">
+          <Outlet />  {/* This will render the child route content, like Dashboard */}
+        </main>
       </div>
     </div>
   );
