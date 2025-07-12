@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet'; // Import react-helmet for SEO
-import { useUser } from '../../context/UserContext'; // Import the useUser hook
-import Card from '../../components/Card/Card'; // Import Card component
-import Button from '../../components/Button/Button'; // Import Button component
+import { Helmet } from 'react-helmet'; 
+import { useUser } from '../../context/UserContext'; 
+import Card from '../../components/Card/Card'; 
+import Button from '../../components/Button/Button'; 
 
 const Dashboard = () => {
-  // Access user data from context using the useUser hook
   const { user } = useUser();
 
   const [recentActivity, setRecentActivity] = useState([
@@ -15,7 +14,7 @@ const Dashboard = () => {
   ]);
 
   useEffect(() => {
-    // Fetch user data or any other necessary logic for dashboard
+    // fetch data or any initialization
   }, []);
 
   return (
@@ -26,7 +25,7 @@ const Dashboard = () => {
         <meta name="keywords" content="dashboard, user stats, posts, comments, activity" />
       </Helmet>
 
-      <h2 className="text-3xl font-semibold text-center mb-6">Welcome, {user.name}</h2>
+      {/* Removed: <h2>Welcome, {user.name}</h2> from here */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card title="Total Users" content={user.totalUsers} />

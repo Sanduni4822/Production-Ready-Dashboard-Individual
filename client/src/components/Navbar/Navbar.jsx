@@ -1,36 +1,58 @@
 import React, { useState } from 'react';
-import Button from '../Button/Button'; // Import Button component
+import Button from '../Button/Button';
+import { useUser } from '../../context/UserContext';  // Context hook import
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, setUser } = useUser();  // Get user data and setter from context
 
-  // Toggle mobile menu visibility
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  // Logout function clears user context and localStorage, redirects to login
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // If you store token here
+    setUser({
+      name: '',
+      email: '',
+      profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
+      posts: 0,
+      comments: 0,
+      totalUsers: 0,
+    });
+    window.location.href = '/login';  // Redirect to login page
+  };
+
   return (
-    <div className="bg-gray-800 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-semibold"></div>
+    <nav className="bg-gray-800 text-white p-4 flex justify-between items-center relative">
+      {/* Show welcome message with user name, fallback to Guest */}
+      <div className="text-2xl font-semibold">
+        Welcome, {user.name || 'Guest'}
+      </div>
+
+      {/* Hamburger button for mobile */}
       <div className="lg:hidden">
-        <button 
-          onClick={toggleMenu} 
-          className="text-white focus:outline-none">
+        <button
+          onClick={toggleMenu}
+          className="text-white focus:outline-none"
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+        >
           <i className={`fa ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
         </button>
       </div>
 
-      {/* Desktop version of the Log Out button */}
+      {/* Desktop logout button */}
       <div className="hidden lg:block">
-        <Button label="Log Out" onClick={() => console.log('Logged out')} />
+        <Button label="Log Out" onClick={handleLogout} />
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu with logout button */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-16 left-0 w-full bg-gray-800 text-white p-4">
-          {/* Only one Log Out button is included now, in the mobile menu */}
-          <Button label="Log Out" onClick={() => console.log('Logged out')} />
+        <div className="lg:hidden absolute top-16 left-0 w-full bg-gray-800 text-white p-4 z-50">
+          <Button label="Log Out" onClick={handleLogout} />
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 
