@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet'; // Import react-helmet for SEO
 import Card from '../../components/Card/Card'; // Import Card component
 import Button from '../../components/Button/Button'; // Import Button component
 
@@ -16,29 +17,28 @@ const Dashboard = () => {
     { activity: 'Joined a new group', timestamp: '1 hour ago' },
   ]);
 
-  // Fetch user data on component mount
   useEffect(() => {
     fetchUserData();  // Fetch user data from an API
   }, []);
 
-  // Simulate fetching user data from an API endpoint
   const fetchUserData = async () => {
-    try {
-      const response = await fetch('/api/user');  // Example API endpoint
-      const data = await response.json();
-      setUserData({
-        name: data.name,
-        posts: data.posts,
-        comments: data.comments,
-        totalUsers: data.totalUsers,
-      });
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
+    // Simulate API call
+    setUserData({
+      name: 'Jane Doe',
+      posts: 130,
+      comments: 350,
+      totalUsers: 1500,
+    });
   };
 
   return (
     <div className="flex flex-col p-6">
+      <Helmet>
+        <title>Dashboard - {userData.name}</title>
+        <meta name="description" content="View your account statistics, posts, comments, and recent activity." />
+        <meta name="keywords" content="dashboard, user stats, posts, comments, activity" />
+      </Helmet>
+
       <h2 className="text-3xl font-semibold text-center mb-6">Welcome, {userData.name}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

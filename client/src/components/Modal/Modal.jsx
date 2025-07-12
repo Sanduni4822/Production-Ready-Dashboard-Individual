@@ -1,11 +1,16 @@
-// src/components/Modal/Modal.jsx
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+      <Helmet>
+        <title>Modal Content - Important Message</title>
+        <meta name="description" content="Important message regarding your account. Please review the information." />
+      </Helmet>
+
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <button onClick={onClose} className="absolute top-2 right-2 text-gray-700">X</button>
         {children}
