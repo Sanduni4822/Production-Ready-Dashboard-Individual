@@ -1,40 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../../components/Button/Button';  // Import Button component
-import InputField from '../../components/InputField/InputField';  // Reusable InputField component
-import { useUser } from '../../context/UserContext';  // Import the useUser hook
+import Button from '../../components/Button/Button';
+import InputField from '../../components/InputField/InputField';
+import { useUser } from '../../context/UserContext';
 
 const Settings = () => {
-  // Access the user data from the context
   const { user, setUser } = useUser();
-  
+
   const [settingsData, setSettingsData] = useState({
-    name: user.name || '',  // Set the initial value from context
-    email: user.email || '',  // Set the initial value from context
+    phone: user.phone || '',
+    address: user.address || '',
+    notificationsEnabled: user.notificationsEnabled ?? true,  // boolean toggle
+    currentPassword: '',
+    newPassword: '',
+    confirmNewPassword: '',
   });
 
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState('');
 
-  // Update settings data when the user context changes
   useEffect(() => {
-    setSettingsData({
-      name: user.name || '',
-      email: user.email || '',
-    });
+    setSettingsData((prev) => ({
+      ...prev,
+      phone: user.phone || '',
+      address: user.address || '',
+      notificationsEnabled: user.notificationsEnabled ?? true,
+    }));
   }, [user]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setSettingsData({
       ...settingsData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
 
   const handleSaveSettings = async () => {
-    // Form validation before saving
-    if (!settingsData.name || !settingsData.email) {
-      setMessage('Please fill in all fields');
+    // Basic validation
+    if (
+      settingsData.newPassword &&
+      settingsData.newPassword !== settingsData.confirmNewPassword
+    ) {
+      setMessage('New passwords do not match');
       return;
     }
 
@@ -42,14 +49,15 @@ const Settings = () => {
     setMessage('Saving...');
 
     try {
-      // Simulating saving data and then updating context
-      await new Promise((resolve) => setTimeout(resolve, 1500));  // Simulating API call delay
-      
-      // Update user data in the context
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Update context (in real app, update backend and refresh user data)
       setUser({
         ...user,
-        name: settingsData.name,
-        email: settingsData.email,
+        phone: settingsData.phone,
+        address: settingsData.address,
+        notificationsEnabled: settingsData.notificationsEnabled,
       });
 
       setIsSaving(false);
@@ -61,41 +69,81 @@ const Settings = () => {
   };
 
   return (
-    <div className="flex flex-col p-6">
+    <div className="flex flex-col p-6 max-w-xl mx-auto">
       <h2 className="text-3xl font-semibold text-center mb-6">Account Settings</h2>
 
-      {/* Feedback Message */}
       {message && (
-        <div className={`mb-4 text-center ${message.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>
+        <div
+          className={`mb-4 text-center ${
+            message.includes('Error') ? 'text-red-500' : 'text-green-500'
+          }`}
+        >
           {message}
         </div>
       )}
 
-      {/* Settings Form */}
       <div className="space-y-6">
         <InputField
-          label="Name"
-          name="name"
-          value={settingsData.name}
+          label="Phone Number"
+          name="phone"
+          value={settingsData.phone}
           onChange={handleInputChange}
+          type="tel"
         />
 
         <InputField
-          label="Email"
-          name="email"
-          value={settingsData.email}
+          label="Address"
+          name="address"
+          value={settingsData.address}
           onChange={handleInputChange}
-          type="email"
+          type="text"
+        />
+
+        <div className="flex items-center space-x-3">
+          <input
+            id="notifications"
+            name="notificationsEnabled"
+            type="checkbox"
+            checked={settingsData.notificationsEnabled}
+            onChange={handleInputChange}
+            className="h-5 w-5 text-blue-600"
+          />
+          <label htmlFor="notifications" className="font-medium text-gray-700">
+            Enable Email Notifications
+          </label>
+        </div>
+
+        <InputField
+          label="Current Password"
+          name="currentPassword"
+          value={settingsData.currentPassword}
+          onChange={handleInputChange}
+          type="password"
+        />
+
+        <InputField
+          label="New Password"
+          name="newPassword"
+          value={settingsData.newPassword}
+          onChange={handleInputChange}
+          type="password"
+        />
+
+        <InputField
+          label="Confirm New Password"
+          name="confirmNewPassword"
+          value={settingsData.confirmNewPassword}
+          onChange={handleInputChange}
+          type="password"
         />
       </div>
 
-      {/* Save Settings Button */}
       <div className="mt-10 text-center">
         <Button
           label={isSaving ? 'Saving...' : 'Save Settings'}
           onClick={handleSaveSettings}
+          disabled={isSaving}
           className="bg-blue-500 text-white p-3 rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-400"
-          disabled={isSaving}  // Disable the button while saving
         />
       </div>
     </div>
