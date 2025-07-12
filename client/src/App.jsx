@@ -4,6 +4,7 @@ import Login from './pages/Login/Login';  // Login page component
 import Layout from './components/Layout/Layout';  // Layout component (Sidebar + Navbar)
 import Dashboard from './pages/Dashboard/Dashboard';  // Dashboard page component
 import Profile from './pages/Profile/Profile';  // Profile page component
+import Settings from './pages/Settings/Settings';  // Settings page component
 import PrivateRoute from './components/PrivateRoute';  // Protected route for authentication
 
 const App = () => {
@@ -20,7 +21,8 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             {/* Profile Route */}
             <Route path="/profile" element={<Profile />} />
-            {/* Add more protected routes like /settings here */}
+            {/* Settings Route */}
+            <Route path="/settings" element={<Settings />} />
           </Route>
         </Route>
 
