@@ -1,12 +1,97 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# MERN Stack Frontend (React) Developer Task
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project implements a **production-ready dashboard UI** using React with routing, simulated authentication, reusable components, and SEO optimization using React Helmet, following **clean architecture and atomic design principles**.
 
-## Expanding the ESLint configuration
+## Objectives
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Professional dashboard UI with **React.js**
+* **Routing** with protected routes (`react-router-dom`)
+* Simulated token-based authentication
+* **Reusable components**: Button, Card, Modal, InputField
+* SEO with **dynamic titles** (`react-helmet`)
+* **Atomic/component folder separation** for maintainability
+
+## Tech Stack
+
+* React.js + Vite
+* react-router-dom
+* react-helmet
+* Tailwind CSS (or CSS Modules)
+* LocalStorage (token simulation)
+* Prettier & ESLint (recommended)
+
+## Folder Structure
+
+```
+src/
+  components/     // Reusable components (Button, Card, Modal, InputField)
+  layouts/        // Navbar, Sidebar
+  pages/          // Dashboard, Profile, Settings, Login
+  routes/         // ProtectedRoute logic
+  App.jsx         // App entry with routing
+  main.jsx       // Main entry
+```
+
+## Features
+
+* **Login Page:** Dummy login with LocalStorage token
+* **Dashboard:** Displays welcome message, user stats, recent activity (dummy JSON)
+* **Profile & Settings Pages:** Accessible only after login
+* **Sidebar & Navbar:** Fully responsive and collapsible
+* **Reusable Components:** Button, Card, Modal, InputField
+* **SEO:** Dynamic page titles with `react-helmet`
+
+## Local Setup
+
+Clone the repo:
+
+```bash
+git clone <repo-link>
+cd <repo-folder>
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run locally:
+
+```bash
+npm run dev
+```
+
+Access: `http://localhost:5173`
+
+## Live Demo
+
+Deployed on Vercel:
+ [Live Demo](vercel-link)
+
+## Deliverables
+
+* [x] GitHub repository with complete code
+* [x] Hosted link (Vercel)
+* [x] Screenshot of folder structure
+* [x] Peer code review request
+* [x] Industry-level `README.md`
+
+## License
+
+MIT License © 2025 Sanduni Wathsala
+
+## Contributing
+
+PRs and suggestions are welcome for improvements.
+
+## Contact
+
+For questions or clarifications, reach out via email or open an issue in the repo.
+
+---
+
+> **This project demonstrates professional React structure, reusable components, routing, and SEO best practices to prepare you for industry-level React development.**
