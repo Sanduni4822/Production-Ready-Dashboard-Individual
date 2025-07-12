@@ -1,23 +1,26 @@
-// src/context/UserContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
+
+// Default user object exported for reuse
+export const defaultUser = {
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  notifications: true,
+  profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
+  posts: 0,
+  comments: 0,
+  totalUsers: 0,
+};
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    notifications: true,
-    profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
-    posts: 0,
-    comments: 0,
-    totalUsers: 0,
-  });
+  const [user, setUser] = useState(defaultUser);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      // Simulate fetching user data (replace with real API call)
       const fetchedData = {
         name: 'Jane Doe',
         email: 'jane.doe@example.com',
