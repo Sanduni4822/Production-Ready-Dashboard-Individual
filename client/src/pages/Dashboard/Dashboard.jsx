@@ -13,7 +13,7 @@ const Dashboard = () => {
   ]);
 
   useEffect(() => {
-    // fetch data or initialization logic
+    // fetch data or initialization logic here if needed
   }, []);
 
   return (
@@ -37,7 +37,8 @@ const Dashboard = () => {
         <Card title="Total Users" content={user.totalUsers} />
         <Card title="Posts" content={user.posts} />
         <Card title="Comments" content={user.comments} />
-        <Card title="Followers" content="N/A" />
+        {/* Followers with fallback to 0 if undefined or null */}
+        <Card title="Followers" content={user.followers ?? 0} />
       </div>
 
       {/* Recent activity */}
