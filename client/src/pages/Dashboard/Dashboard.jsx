@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet'; 
 import { useUser } from '../../context/UserContext'; 
 import Card from '../../components/Card/Card'; 
-import Button from '../../components/Button/Button'; 
 
 const Dashboard = () => {
   const { user } = useUser();
@@ -14,19 +13,26 @@ const Dashboard = () => {
   ]);
 
   useEffect(() => {
-    // fetch data or any initialization
+    // fetch data or initialization logic
   }, []);
 
   return (
     <div className="flex flex-col p-6">
       <Helmet>
         <title>Dashboard - {user.name}</title>
-        <meta name="description" content="View your account statistics, posts, comments, and recent activity." />
+        <meta
+          name="description"
+          content="View your account statistics, posts, comments, and recent activity."
+        />
         <meta name="keywords" content="dashboard, user stats, posts, comments, activity" />
       </Helmet>
 
-      {/* Removed: <h2>Welcome, {user.name}</h2> from here */}
+      {/* Welcome message */}
+      <h2 className="text-3xl font-semibold text-center mb-6">
+        Welcome, {user.name}
+      </h2>
 
+      {/* User stats cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card title="Total Users" content={user.totalUsers} />
         <Card title="Posts" content={user.posts} />
@@ -34,6 +40,7 @@ const Dashboard = () => {
         <Card title="Followers" content="N/A" />
       </div>
 
+      {/* Recent activity */}
       <div className="mt-10">
         <h3 className="text-2xl font-medium mb-4">Recent Activity</h3>
         <ul>
@@ -46,10 +53,6 @@ const Dashboard = () => {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div className="mt-10 text-center">
-        <Button label="Log Out" onClick={() => console.log('Logged out')} />
       </div>
     </div>
   );
