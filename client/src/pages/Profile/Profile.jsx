@@ -42,9 +42,16 @@ const Profile = () => {
         />
       </div>
 
+      {/* Flexbox layout for name and email to ensure they display properly */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-        <Card title="Name" content={userData.name} />
-        <Card title="Email" content={userData.email} />
+        <div className="flex flex-col justify-center items-center">
+          <h3 className="font-medium text-gray-800">Name</h3>
+          <p className="text-blue-600">{userData.name}</p>
+        </div>
+        <div className="flex flex-col justify-center items-center">
+          <h3 className="font-medium text-gray-800">Email</h3>
+          <p className="text-blue-600">{userData.email}</p>
+        </div>
       </div>
 
       <div className="mt-10 text-center">
