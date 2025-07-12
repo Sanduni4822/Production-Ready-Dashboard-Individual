@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-gray-800 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-semibold">Dashboard</div>
+      <div className="text-2xl font-semibold"></div>
       <div className="lg:hidden">
         <button 
           onClick={toggleMenu} 

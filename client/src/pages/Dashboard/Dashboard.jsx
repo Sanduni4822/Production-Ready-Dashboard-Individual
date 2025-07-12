@@ -16,21 +16,31 @@ const Dashboard = () => {
     { activity: 'Joined a new group', timestamp: '1 hour ago' },
   ]);
 
+  // Fetch user data on component mount
   useEffect(() => {
-    setTimeout(() => {
-      setUserData({
-        name: 'John Doe',
-        posts: 130,
-        comments: 350,
-        totalUsers: 1500,
-      });
-    }, 2000);
+    fetchUserData();  // Fetch user data from an API
   }, []);
+
+  // Simulate fetching user data from an API endpoint
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch('/api/user');  // Example API endpoint
+      const data = await response.json();
+      setUserData({
+        name: data.name,
+        posts: data.posts,
+        comments: data.comments,
+        totalUsers: data.totalUsers,
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   return (
     <div className="flex flex-col p-6">
       <h2 className="text-3xl font-semibold text-center mb-6">Welcome, {userData.name}</h2>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card title="Total Users" content={userData.totalUsers} />
         <Card title="Posts" content={userData.posts} />
