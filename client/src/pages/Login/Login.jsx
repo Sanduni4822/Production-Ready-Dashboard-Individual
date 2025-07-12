@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useUser } from '../../context/UserContext';  // Import the useUser hook
 import InputField from '../../components/InputField/InputField'; // Import InputField component
 import Button from '../../components/Button/Button'; // Import Button component
 import Modal from '../../components/Modal/Modal'; // Import Modal component
@@ -7,11 +8,17 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const { setUser } = useUser();  // Use the setUser function from context to set the user data
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username === 'admin' && password === 'admin') {
-      localStorage.setItem('authToken', 'dummy-token');
+      const userData = {
+        name: 'Admin User',
+        email: 'admin@example.com',
+        profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
+      };
+      setUser(userData); // Set the user data in context
       alert('Login successful');
     } else {
       setShowModal(true); // Show modal when credentials are invalid

@@ -9,6 +9,9 @@ export const UserProvider = ({ children }) => {
     name: '',
     email: '',
     profilePicture: 'https://www.w3schools.com/w3images/avatar2.png', // Default profile picture
+    posts: 0,
+    comments: 0,
+    totalUsers: 0,
   });
 
   useEffect(() => {
@@ -17,7 +20,10 @@ export const UserProvider = ({ children }) => {
       const fetchedData = {
         name: 'Jane Doe',
         email: 'jane.doe@example.com',
-        profilePicture: 'https://www.w3schools.com/w3images/avatar2.png', // Fetched user data
+        profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
+        posts: 130,       // Fetched user data (posts)
+        comments: 350,    // Fetched user data (comments)
+        totalUsers: 1500, // Fetched user data (totalUsers)
       };
       setUser(fetchedData);
     };
@@ -32,5 +38,6 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use user data
+// Custom hook to use user data from the context
 export const useUser = () => useContext(UserContext);
+

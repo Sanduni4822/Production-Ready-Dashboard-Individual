@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';  // Import Button component
 import InputField from '../../components/InputField/InputField';  // Reusable InputField component
+import { useUser } from '../../context/UserContext';  // Import the useUser hook
 
 const Settings = () => {
+  // Access the user data from the context
+  const { user, setUser } = useUser();
+  
   const [settingsData, setSettingsData] = useState({
-    name: '',
-    email: '',
+    name: user.name || '',  // Set the initial value from context
+    email: user.email || '',  // Set the initial value from context
   });
 
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState('');
 
-  // Simulating fetching user settings from an API
+  // Update settings data when the user context changes
   useEffect(() => {
-    fetchSettingsData();
-  }, []);
-
-  const fetchSettingsData = async () => {
-    try {
-      // Here you would fetch settings data from your backend API
-      const fetchedData = {
-        name: 'Jane Doe',
-        email: 'jane.doe@example.com',
-      };
-      setSettingsData(fetchedData);
-    } catch (error) {
-      setMessage('Error fetching settings data');
-    }
-  };
+    setSettingsData({
+      name: user.name || '',
+      email: user.email || '',
+    });
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,8 +42,16 @@ const Settings = () => {
     setMessage('Saving...');
 
     try {
-      // Here you would handle the API call to save settings
+      // Simulating saving data and then updating context
       await new Promise((resolve) => setTimeout(resolve, 1500));  // Simulating API call delay
+      
+      // Update user data in the context
+      setUser({
+        ...user,
+        name: settingsData.name,
+        email: settingsData.email,
+      });
+
       setIsSaving(false);
       setMessage('Settings saved successfully');
     } catch (error) {

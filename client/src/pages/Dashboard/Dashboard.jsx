@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet'; // Import react-helmet for SEO
+import { useUser } from '../../context/UserContext'; // Import the useUser hook
 import Card from '../../components/Card/Card'; // Import Card component
 import Button from '../../components/Button/Button'; // Import Button component
 
 const Dashboard = () => {
-  const [userData, setUserData] = useState({
-    name: 'John Doe',
-    posts: 120,
-    comments: 320,
-    totalUsers: 1000,
-  });
+  // Access user data from context using the useUser hook
+  const { user } = useUser();
 
   const [recentActivity, setRecentActivity] = useState([
     { activity: 'Liked a post', timestamp: '2 minutes ago' },
@@ -18,33 +15,23 @@ const Dashboard = () => {
   ]);
 
   useEffect(() => {
-    fetchUserData();  // Fetch user data from an API
+    // Fetch user data or any other necessary logic for dashboard
   }, []);
-
-  const fetchUserData = async () => {
-    // Simulate API call
-    setUserData({
-      name: 'Jane Doe',
-      posts: 130,
-      comments: 350,
-      totalUsers: 1500,
-    });
-  };
 
   return (
     <div className="flex flex-col p-6">
       <Helmet>
-        <title>Dashboard - {userData.name}</title>
+        <title>Dashboard - {user.name}</title>
         <meta name="description" content="View your account statistics, posts, comments, and recent activity." />
         <meta name="keywords" content="dashboard, user stats, posts, comments, activity" />
       </Helmet>
 
-      <h2 className="text-3xl font-semibold text-center mb-6">Welcome, {userData.name}</h2>
+      <h2 className="text-3xl font-semibold text-center mb-6">Welcome, {user.name}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card title="Total Users" content={userData.totalUsers} />
-        <Card title="Posts" content={userData.posts} />
-        <Card title="Comments" content={userData.comments} />
+        <Card title="Total Users" content={user.totalUsers} />
+        <Card title="Posts" content={user.posts} />
+        <Card title="Comments" content={user.comments} />
         <Card title="Followers" content="N/A" />
       </div>
 
