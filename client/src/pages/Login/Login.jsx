@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { useUser } from '../../context/UserContext';  // Import the useUser hook
-import InputField from '../../components/InputField/InputField'; // Import InputField component
-import Button from '../../components/Button/Button'; // Import Button component
-import Modal from '../../components/Modal/Modal'; // Import Modal component
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useUser } from '../../context/UserContext';
+import InputField from '../../components/InputField/InputField';
+import Button from '../../components/Button/Button';
+import Modal from '../../components/Modal/Modal';
 
 const Login = () => {
+  const navigate = useNavigate();  // Initialize navigate
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
-  const { setUser } = useUser();  // Use the setUser function from context to set the user data
+  const [showModal, setShowModal] = useState(false);
+  const { setUser } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,10 +20,11 @@ const Login = () => {
         email: 'admin@example.com',
         profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
       };
-      setUser(userData); // Set the user data in context
-      alert('Login successful');
+      setUser(userData);  // Update context user data
+      localStorage.setItem('authToken', 'dummy-auth-token');  // Set token in localStorage
+      navigate('/dashboard');  // Redirect to dashboard page
     } else {
-      setShowModal(true); // Show modal when credentials are invalid
+      setShowModal(true);  // Show error modal
     }
   };
 
