@@ -7,7 +7,6 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
     name: '',
     email: '',
-    password: '',  // Added password field
     phone: '',
     address: '',
     notifications: true,
@@ -22,7 +21,6 @@ export const UserProvider = ({ children }) => {
       const fetchedData = {
         name: 'Jane Doe',
         email: 'jane.doe@example.com',
-        password: 'admin123',  // Simulated password
         phone: '123-456-7890',
         address: '123 Main St, City',
         notifications: true,

@@ -1,4 +1,3 @@
-// src/pages/Login/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
@@ -8,20 +7,34 @@ import Modal from '../../components/Modal/Modal';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [emailInput, setEmailInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
+  const { setUser } = useUser();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const { user } = useUser();  // Use existing user from context
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //  Compare with context user credentials
-    if (emailInput === user.email && passwordInput === user.password) {
-      localStorage.setItem('authToken', 'dummy-auth-token');
-      navigate('/dashboard');
+    // Simple email/password check
+    if (email === 'jane.doe@example.com' && password === 'admin123') {
+      const userData = {
+        name: 'Jane Doe',
+        email: 'jane.doe@example.com',
+        phone: '123-456-7890',
+        address: '123 Main St, City',
+        notifications: true,
+        profilePicture: 'https://www.w3schools.com/w3images/avatar2.png',
+        posts: 130,
+        comments: 350,
+        totalUsers: 1500,
+      };
+
+      setUser(userData);
+      localStorage.setItem('authToken', 'dummy-auth-token'); // Save token
+      navigate('/dashboard'); // Redirect on success
     } else {
-      setShowModal(true); // Show error modal
+      setShowModal(true); // Show invalid credentials modal
     }
   };
 
@@ -34,24 +47,23 @@ const Login = () => {
             label="Email"
             type="email"
             id="email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <InputField
             label="Password"
             type="password"
             id="password"
-            value={passwordInput}
-            onChange={(e) => setPasswordInput(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button type="submit" label="Login" />
         </form>
       </div>
 
-      {/* Modal for Invalid Credentials */}
       <Modal show={showModal} onClose={() => setShowModal(false)}>
         <h2 className="text-xl text-red-600">Invalid Credentials</h2>
-        <p>Please check your email and password.</p>
+        <p>Please check your email and password and try again.</p>
       </Modal>
     </div>
   );
