@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug current folder (optional)
+        run: |
+          pwd
+          ls -la
+          ls -la client
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
