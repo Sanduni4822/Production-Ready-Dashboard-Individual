@@ -17,7 +17,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex flex-col p-6">
+    <div className="flex flex-col p-4 sm:p-6 max-w-7xl mx-auto">
       <Helmet>
         <title>Dashboard - {user.name}</title>
         <meta
@@ -28,7 +28,7 @@ const Dashboard = () => {
       </Helmet>
 
       {/* Welcome message */}
-      <h2 className="text-3xl font-semibold text-center mb-6">
+      <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-6">
         Welcome, {user.name}
       </h2>
 
@@ -43,7 +43,7 @@ const Dashboard = () => {
       {/* Recent activity */}
       <div className="mt-10">
         <h3 className="text-2xl font-medium mb-4">Recent Activity</h3>
-        <ul>
+        <ul className="max-h-60 overflow-y-auto">
           {recentActivity.map((activity, index) => (
             <li key={index} className="mb-2">
               <div className="flex justify-between items-center">
