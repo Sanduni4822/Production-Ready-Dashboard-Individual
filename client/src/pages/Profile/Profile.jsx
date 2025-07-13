@@ -4,10 +4,12 @@ import { useUser } from '../../context/UserContext';
 import Button from '../../components/Button/Button';
 import InputField from '../../components/InputField/InputField';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const { user, setUser } = useUser();
   const [isEditing, setIsEditing] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -20,7 +22,6 @@ const Profile = () => {
     },
   });
 
-  // When clicking edit, reset form with current user data
   const startEditing = () => {
     reset({
       name: user.name,
@@ -31,19 +32,16 @@ const Profile = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Update global user state
       setUser({
         ...user,
         name: data.name,
         email: data.email,
       });
-
+      toast.success('Profile updated successfully!');
       setIsEditing(false);
     } catch (error) {
-      alert('Failed to update profile');
+      toast.error('Failed to update profile');
     }
   };
 
@@ -101,8 +99,7 @@ const Profile = () => {
             {...register('email', {
               required: 'Email is required',
               pattern: {
-                value:
-                  /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                 message: 'Invalid email address',
               },
             })}
