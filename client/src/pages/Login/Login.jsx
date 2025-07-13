@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+// src/pages/Login/Login.jsx
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import InputField from '../../components/InputField/InputField';
 import Button from '../../components/Button/Button';
-import Modal from '../../components/Modal/Modal';
 
 // Validation schema using Yup
 const schema = yup.object().shape({
@@ -17,19 +18,16 @@ const schema = yup.object().shape({
 const Login = () => {
   const navigate = useNavigate();
   const { setUser } = useUser();
-  const [showModal, setShowModal] = useState(false);
 
-  // Setup react-hook-form with yup validation resolver
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    // Simple hardcoded login check
     if (data.email === 'jane.doe@example.com' && data.password === 'admin123') {
       const userData = {
         name: 'Jane Doe',
@@ -45,9 +43,13 @@ const Login = () => {
 
       setUser(userData);
       localStorage.setItem('authToken', 'dummy-auth-token');
-      navigate('/dashboard');
+      toast.success('Login successful! Redirecting...');
+      
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1500);
     } else {
-      setShowModal(true);
+      toast.error('Invalid email or password. Please try again.');
     }
   };
 
@@ -71,14 +73,9 @@ const Login = () => {
           />
           {errors.password && <p className="text-red-600 text-sm mb-2">{errors.password.message}</p>}
 
-          <Button type="submit" label="Login" />
+          <Button type="submit" label={isSubmitting ? 'Logging in...' : 'Login'} disabled={isSubmitting} />
         </form>
       </div>
-
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <h2 className="text-xl text-red-600">Invalid Credentials</h2>
-        <p>Please check your email and password and try again.</p>
-      </Modal>
     </div>
   );
 };

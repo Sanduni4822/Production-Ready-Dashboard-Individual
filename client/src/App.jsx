@@ -2,6 +2,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import { UserProvider } from './context/UserContext';
 import AppRoutes from './routes/AppRoutes';
 
@@ -18,6 +20,7 @@ const App = () => {
           />
         </Helmet>
         <AppRoutes />
+        <ToastContainer position="top-right" autoClose={3000} pauseOnHover />
       </Router>
     </UserProvider>
   );
