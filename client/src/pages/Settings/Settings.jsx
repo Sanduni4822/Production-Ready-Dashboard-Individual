@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/Button/Button';
 import InputField from '../../components/InputField/InputField';
 import { useUser } from '../../context/UserContext';
+import { toast } from 'react-toastify';
 
 const Settings = () => {
   const { user, setUser } = useUser();
-  const [message, setMessage] = useState('');
 
-  // Setup react-hook-form
   const {
     register,
     handleSubmit,
@@ -26,7 +25,6 @@ const Settings = () => {
     },
   });
 
-  // Reset form if user changes (simulate fetching updated user)
   useEffect(() => {
     reset({
       phone: user.phone || '',
@@ -38,21 +36,17 @@ const Settings = () => {
     });
   }, [user, reset]);
 
-  // Watch newPassword and confirmNewPassword for validation
   const newPassword = watch('newPassword');
 
   const onSubmit = async (data) => {
-    setMessage('');
     if (data.newPassword !== data.confirmNewPassword) {
-      setMessage('New passwords do not match');
+      toast.error('New passwords do not match');
       return;
     }
 
-    // Simulate API call delay
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Update user context (replace with real API call in production)
       setUser({
         ...user,
         phone: data.phone,
@@ -60,25 +54,15 @@ const Settings = () => {
         notificationsEnabled: data.notificationsEnabled,
       });
 
-      setMessage('Settings saved successfully!');
+      toast.success('Settings saved successfully!');
     } catch (error) {
-      setMessage('Error saving settings');
+      toast.error('Error saving settings');
     }
   };
 
   return (
     <div className="flex flex-col p-6 max-w-xl mx-auto">
       <h2 className="text-3xl font-semibold text-center mb-6">Account Settings</h2>
-
-      {message && (
-        <div
-          className={`mb-4 text-center ${
-            message.includes('Error') ? 'text-red-500' : 'text-green-500'
-          }`}
-        >
-          {message}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <InputField
