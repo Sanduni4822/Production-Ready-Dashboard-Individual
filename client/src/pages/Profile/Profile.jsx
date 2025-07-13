@@ -1,21 +1,65 @@
-import React from 'react';
-import { Helmet } from 'react-helmet'; // Importing react-helmet for SEO
-import { useUser } from '../../context/UserContext'; // Import the useUser hook
-import Button from '../../components/Button/Button';  // Import Button component
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useUser } from '../../context/UserContext';
+import Button from '../../components/Button/Button';
+import InputField from '../../components/InputField/InputField';
+import { useForm } from 'react-hook-form';
 
 const Profile = () => {
-  // Access user data from context using the useUser hook
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const [isEditing, setIsEditing] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
+  });
+
+  // When clicking edit, reset form with current user data
+  const startEditing = () => {
+    reset({
+      name: user.name,
+      email: user.email,
+    });
+    setIsEditing(true);
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Update global user state
+      setUser({
+        ...user,
+        name: data.name,
+        email: data.email,
+      });
+
+      setIsEditing(false);
+    } catch (error) {
+      alert('Failed to update profile');
+    }
+  };
 
   return (
-    <div className="flex flex-col p-6">
+    <div className="flex flex-col p-6 max-w-md mx-auto">
       <Helmet>
         <title>Profile of {user.name}</title>
-        <meta name="description" content="View Jane Doe's profile including her name, email, and other details." />
-        <meta name="keywords" content="profile, user profile, details, name, email" />
+        <meta
+          name="description"
+          content={`View and edit profile of ${user.name}`}
+        />
       </Helmet>
 
-      <h2 className="text-3xl font-semibold text-center mb-6">Profile of {user.name}</h2>
+      <h2 className="text-3xl font-semibold text-center mb-6">
+        Profile of {user.name}
+      </h2>
 
       <div className="flex justify-center mb-8">
         <img
@@ -25,21 +69,60 @@ const Profile = () => {
         />
       </div>
 
-      {/* Flexbox layout for name and email to ensure they display properly */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-        <div className="flex flex-col justify-center items-center">
-          <h3 className="font-medium text-gray-800">Name</h3>
-          <p className="text-blue-600">{user.name}</p>
-        </div>
-        <div className="flex flex-col justify-center items-center">
-          <h3 className="font-medium text-gray-800">Email</h3>
-          <p className="text-blue-600">{user.email}</p>
-        </div>
-      </div>
+      {!isEditing ? (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+            <div className="flex flex-col justify-center items-center">
+              <h3 className="font-medium text-gray-800">Name</h3>
+              <p className="text-blue-600">{user.name}</p>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <h3 className="font-medium text-gray-800">Email</h3>
+              <p className="text-blue-600">{user.email}</p>
+            </div>
+          </div>
 
-      <div className="mt-10 text-center">
-        <Button label="Edit Profile" onClick={() => console.log('Edit Profile clicked')} />
-      </div>
+          <div className="text-center">
+            <Button label="Edit Profile" onClick={startEditing} />
+          </div>
+        </>
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <InputField
+            label="Name"
+            type="text"
+            {...register('name', { required: 'Name is required' })}
+            error={errors.name?.message}
+          />
+
+          <InputField
+            label="Email"
+            type="email"
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value:
+                  /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                message: 'Invalid email address',
+              },
+            })}
+            error={errors.email?.message}
+          />
+
+          <div className="flex justify-between">
+            <Button
+              type="submit"
+              label={isSubmitting ? 'Saving...' : 'Save'}
+              disabled={isSubmitting}
+            />
+            <Button
+              type="button"
+              label="Cancel"
+              onClick={() => setIsEditing(false)}
+            />
+          </div>
+        </form>
+      )}
     </div>
   );
 };
