@@ -27,12 +27,41 @@ This project implements a **production-ready dashboard UI** using React with rou
 
 ```
 src/
-  components/     // Reusable components (Button, Card, Modal, InputField)
-  layouts/        // Navbar, Sidebar
-  pages/          // Dashboard, Profile, Settings, Login
-  routes/         // ProtectedRoute logic
-  App.jsx         // App entry with routing
-  main.jsx       // Main entry
+  components/             # Reusable UI components
+    Button/               # Custom button component
+    Card/                 # Info/stat card components
+    InputField/           # Input field with label & validation
+    Modal/                # Modal dialog component
+    Navbar/               # Top navigation bar
+    Sidebar/              # Responsive sidebar
+    PrivateRoute.jsx      # Auth-protected route logic
+
+  context/
+    UserContext.jsx       # React Context for global user state
+
+  layouts/                # Layout wrappers
+    MainLayout.jsx        # Page layout with navbar + sidebar
+
+  pages/                  # Main pages
+    Dashboard.jsx         # User dashboard page
+    Profile.jsx           # User profile page
+    Settings.jsx          # User settings page
+    Login.jsx             # Login page
+
+  routes/
+    AppRoutes.jsx         # Route definitions
+
+  services/
+    api.jsx               # Axios instance
+    authService.js        # Login/auth-related API calls
+    userService.js        # User-related API functions
+
+  styles/
+    index.css             # Tailwind base styles + custom styles
+
+  App.jsx                 # Root component (routing defined here)
+  main.jsx                # React entry point (renders <App />)
+
 ```
 
 ## Features
@@ -67,10 +96,32 @@ npm run dev
 
 Access: `http://localhost:5173`
 
+## CI/CD Integration
+
+### GitHub Actions – Continuous Integration
+
+This project uses **GitHub Actions** to automate the build process on every push to the `main` branch.
+
+#### Workflow Details:
+
+- **Workflow Path:** `.github/workflows/deploy.yml`
+- **Working Directory:** `client/`
+- **Handled Steps:**
+  - Checkout the code
+  - Install dependencies (`npm install`)
+  - Build the React app (`npm run build`)
+
+#### Sample Workflow Snippet:
+```yaml
+defaults:
+  run:
+    working-directory: ./client
+``` 
 ## Live Demo
 
-Deployed on Vercel:
- [Live Demo](vercel-link)
+### Deployed on Vercel (Continuous Deployment)
+
+🌐 **Live Demo:** [Production-Ready Dashboard](https://production-ready-dashboard-individu.vercel.app/)
 
 ## Deliverables
 
