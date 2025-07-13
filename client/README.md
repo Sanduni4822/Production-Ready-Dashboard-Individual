@@ -78,8 +78,8 @@ src/
 Clone the repo:
 
 ```bash
-git clone <https://github.com/Sanduni4822/Production-Ready-Dashboard-Individual.git>
-cd <Production-Ready-Dashboard-Individual>
+git clone https://github.com/Sanduni4822/Production-Ready-Dashboard-Individual.git
+cd Production-Ready-Dashboard-Individual
 ```
 
 Install dependencies:
@@ -122,6 +122,17 @@ defaults:
 ### Deployed on Vercel (Continuous Deployment)
 
 🌐 **Live Demo:** [Production-Ready Dashboard](https://production-ready-dashboard-individu.vercel.app/)
+
+## Project Folder Structure (Screenshots)
+
+Below are the visual representations of the project's folder structure:
+
+| Screenshot | Description |
+|------------|-------------|
+| ![Folder Structure 1](docs/folder-structure1.png) | Base `src/` structure including core folders up to `routes/` |
+| ![Folder Structure 2](docs/folder-structure2.png) | `routes/` folder expanded showing `vercel.json` and configs |
+| ![Folder Structure 3](docs/folder-structure3.png) | `components/` folder expanded showing internal components |
+| ![Folder Structure 4](docs/folder-structure4.png) | Other folders (`context/`, `services/`, etc.) expanded |
 
 ## Deliverables
 
