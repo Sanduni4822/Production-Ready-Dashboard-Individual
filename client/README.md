@@ -78,8 +78,8 @@ src/
 Clone the repo:
 
 ```bash
-git clone <repo-link>
-cd <repo-folder>
+git clone <https://github.com/Sanduni4822/Production-Ready-Dashboard-Individual.git>
+cd <Production-Ready-Dashboard-Individual>
 ```
 
 Install dependencies:
